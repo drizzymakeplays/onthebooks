@@ -1,0 +1,49 @@
+volumes:
+  onthebooks-data:
+    external: true
+  pg-admin-data:
+    external: true
+services:
+    fastapi:
+        environment:
+            CORS_HOST: http://localhost:2222
+            DATABASE_URL: postgresql://otbuser:password@db/onthebooks
+            WAIT_HOSTS: db:5432
+            SIGNING_KEY: ${SIGNING_KEY}
+        build:
+            context: api
+            dockerfile: Dockerfile.dev
+        ports:
+            - 2224:8000
+        volumes:
+            - ./api:/app
+    ghi:
+        image: node:lts-bullseye
+        command: /bin/bash run.sh
+        working_dir: /app
+        volumes:
+            - ./ghi:/app
+        ports:
+            - "2222:2222"
+    db:
+        image: postgres:14.5-bullseye
+        environment:
+            POSTGRES_PASSWORD: password
+            POSTGRES_USER: otbuser
+            POSTGRES_DB: onthebooks
+        ports:
+           - "25432:5432"
+        volumes:
+           - onthebooks-data:/var/lib/postgresql/onthebooks
+    pg-admin:
+        image: dpage/pgadmin4
+        volumes:
+            - pg-admin-data:/var/lib/pgadmin
+        ports:
+            - 8082:80
+        environment:
+            PGADMIN_EMAIL: {PGADMIN_EMAIL}
+            PGADMIN_PASSWORD: {PGADMIN_PASSWORD}
+            PGADMIN_DISABLE_POSTFIX: 1
+
+
