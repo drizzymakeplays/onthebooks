@@ -22,10 +22,13 @@ class MindscribeAuthenticator(Authenticator):
         # Return the accounts. That's it.
         return accounts
 
-    def get_hashed_password(self, account: AccountOutWithHashedPassword):
-        # Return the encrypted password value from your
-        # account object
-        return account.hashed_password
+    def get_hashed_password(self, account):
+        if isinstance(account, dict):
+            return None
+
+        if isinstance(account, AccountOutWithHashedPassword):
+            return account.hashed_password
+        return None
 
     def get_account_data_for_cookie(
         self, account: AccountOutWithHashedPassword

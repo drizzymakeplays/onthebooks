@@ -1,5 +1,6 @@
 from models.profiles import ProfileOut
 from queries.pool import pool
+from typing import List
 
 
 class ProfileQueries:
@@ -82,9 +83,80 @@ class ProfileQueries:
                     """,
                     params,
                 )
-
-                # Check if the update was successful (you can add error handling as needed)
                 if db.rowcount > 0:
                     return True
                 else:
                     return None
+
+    def list_profiles(self):
+        with pool.connection() as conn:
+            with conn.cursor() as db:
+                db.execute(
+                    """
+                    SELECT id, display_name, profile_picture, phone_number, shop_address, shop_name
+                    FROM profiles;
+                    """
+                )
+                profiles = db.fetchall()
+
+        return [
+            ProfileOut(
+                id=record[0],
+                display_name=record[1],
+                profile_picture=record[2],
+                phone_number=record[3],
+                shop_address=record[4],
+                shop_name=record[5],
+            )
+            for record in profiles
+        ]
+
+    def get_profile(self, profile_id: int):
+        with pool.connection() as conn:
+            with conn.cursor() as db:
+                db.execute(
+                    """
+                    SELECT id, display_name, profile_picture, phone_number, shop_address, shop_name
+                    FROM profiles
+                    WHERE id = %s;
+                    """,
+                    (profile_id,),
+                )
+                profile = db.fetchone()
+
+        if profile:
+            return ProfileOut(
+                id=profile[0],
+                display_name=profile[1],
+                profile_picture=profile[2],
+                phone_number=profile[3],
+                shop_address=profile[4],
+                shop_name=profile[5],
+            )
+        else:
+            return None
+
+    def get_my_profile(self, profile_id: int):
+        with pool.connection() as conn:
+            with conn.cursor() as db:
+                db.execute(
+                    """
+                    SELECT id, display_name, profile_picture, phone_number, shop_address, shop_name
+                    FROM profiles
+                    WHERE id = %s;
+                    """,
+                    (profile_id,),
+                )
+                profile = db.fetchone()
+
+        if profile:
+            return ProfileOut(
+                id=profile[0],
+                display_name=profile[1],
+                profile_picture=profile[2],
+                phone_number=profile[3],
+                shop_address=profile[4],
+                shop_name=profile[5],
+            )
+        else:
+            return None

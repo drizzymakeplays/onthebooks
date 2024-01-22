@@ -24,10 +24,10 @@ class AccountQueries:
                     return AccountOutWithHashedPassword(**record)
                 except Exception:
                     return {"message": "Account not found"}
+
     def create(self, data, hashed_password) -> AccountOutWithHashedPassword:
         with pool.connection() as conn:
             with conn.cursor() as db:
-
                 params = [
                     data.first_name,
                     data.last_name,
@@ -72,4 +72,3 @@ class AccountQueries:
                         record[col[0]] = row[i]
                     print(record)
                 return AccountOutWithHashedPassword(**record)
-
