@@ -2,6 +2,9 @@
 
 # On the books
 _My take on a barber booking application_
+
+# On the books
+_My take on a barber booking application_
 </div>
 
 [![Gitlab Release](https://img.shields.io/badge/version-1.0-green)](https://gitlab.com/Eksistenze/project-beta)
