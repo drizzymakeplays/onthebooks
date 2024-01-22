@@ -111,16 +111,16 @@ class ProfileQueries:
             for record in profiles
         ]
 
-    def get_profile(self, profile_id: int):
+    def get_profile(self, display_name: str):
         with pool.connection() as conn:
             with conn.cursor() as db:
                 db.execute(
                     """
                     SELECT id, display_name, profile_picture, phone_number, shop_address, shop_name
                     FROM profiles
-                    WHERE id = %s;
+                    WHERE display_name = %s;
                     """,
-                    (profile_id,),
+                    (display_name,),
                 )
                 profile = db.fetchone()
 

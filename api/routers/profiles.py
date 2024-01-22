@@ -42,10 +42,10 @@ async def list_profiles(
     "/api/profiles/{profile_id}/", response_model=ProfileOut | HttpError
 )
 async def get_profile(
-    profile_id: int,
+    display_name: str,
     repo: ProfileQueries = Depends(),
 ):
-    profile = repo.get_profile(profile_id)
+    profile = repo.get_profile(display_name)
 
     if not profile:
         raise HTTPException(
