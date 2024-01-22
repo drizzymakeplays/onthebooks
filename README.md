@@ -3,8 +3,6 @@
 # On the books
 _My take on a barber booking application_
 
-# On the books
-_My take on a barber booking application_
 </div>
 
 [![Gitlab Release](https://img.shields.io/badge/version-1.0-green)](https://gitlab.com/Eksistenze/project-beta)
@@ -62,9 +60,9 @@ docker-compose build
 docker-compose up
 ```
 ### App paths
-Use http://localhost:2222/ to connect to the app.
-Use http://localhost:2224/docs to connect to Fastapi Swagger for testing the endpoints and documentation.
-Use http://localhost:8082/ to connect to pg-admin database for running queries and viewing tables.
+* Use http://localhost:2222/ to connect to the app.
+* Use http://localhost:2224/docs to connect to Fastapi Swagger for testing the endpoints and documentation.
+* Use http://localhost:8082/ to connect to pg-admin database for running queries and viewing tables.
 
 ### Installing python dependencies locally
 
